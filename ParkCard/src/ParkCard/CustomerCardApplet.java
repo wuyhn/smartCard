@@ -224,8 +224,14 @@ public class CustomerCardApplet extends Applet {
      */
     protected void addOrIncreaseTickets(APDU apdu) {
         byte[] buffer = apdu.getBuffer();
-        // Game code và số vé trong CDATA
-        // Placeholder implementation
+        short bytesRead = apdu.setIncomingAndReceive();
+        
+        // TODO: Implement actual game management logic
+        // Format: [game_code_length][game_code][ticket_count_2_bytes]
+        // For now, just acknowledge receipt
+        if (bytesRead < 3) {
+            ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
+        }
     }
     
     /**
@@ -233,8 +239,14 @@ public class CustomerCardApplet extends Applet {
      */
     protected void decreaseGameTickets(APDU apdu) {
         byte[] buffer = apdu.getBuffer();
-        // Game code và số vé cần giảm trong CDATA
-        // Placeholder implementation
+        short bytesRead = apdu.setIncomingAndReceive();
+        
+        // TODO: Implement actual game ticket decrease logic
+        // Format: [game_code_length][game_code][ticket_count_2_bytes]
+        // Should validate ticket availability before decreasing
+        if (bytesRead < 3) {
+            ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
+        }
     }
     
     /**
@@ -251,8 +263,13 @@ public class CustomerCardApplet extends Applet {
      */
     protected void updateGameTickets(APDU apdu) {
         byte[] buffer = apdu.getBuffer();
-        // Game code và số vé mới trong CDATA
-        // Placeholder implementation
+        short bytesRead = apdu.setIncomingAndReceive();
+        
+        // TODO: Implement actual game ticket update logic
+        // Format: [game_code_length][game_code][new_ticket_count_2_bytes]
+        if (bytesRead < 3) {
+            ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
+        }
     }
     
     /**
@@ -260,9 +277,18 @@ public class CustomerCardApplet extends Applet {
      */
     protected void findGame(APDU apdu) {
         byte[] buffer = apdu.getBuffer();
-        // Game code trong CDATA
-        // Trả về thông tin game nếu tìm thấy
-        // Placeholder implementation
+        short bytesRead = apdu.setIncomingAndReceive();
+        
+        // TODO: Implement actual game search logic
+        // Format: [game_code_length][game_code]
+        // Should return game info or error if not found
+        if (bytesRead < 1) {
+            ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
+        }
+        
+        // Placeholder: return empty result
+        Util.setShort(buffer, (short)0, (short)0);
+        apdu.setOutgoingAndSend((short)0, (short)2);
     }
     
     /**
@@ -270,8 +296,13 @@ public class CustomerCardApplet extends Applet {
      */
     protected void removeGame(APDU apdu) {
         byte[] buffer = apdu.getBuffer();
-        // Game code trong CDATA
-        // Placeholder implementation
+        short bytesRead = apdu.setIncomingAndReceive();
+        
+        // TODO: Implement actual game removal logic
+        // Format: [game_code_length][game_code]
+        if (bytesRead < 1) {
+            ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
+        }
     }
     
     /**

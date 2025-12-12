@@ -4,6 +4,30 @@ import androidx.compose.runtime.*
 import org.example.project.screen.*
 
 /**
+ * Interface placeholder cho SmartCardManager
+ * Sẽ được implement với logic thực tế khi tích hợp card reader
+ */
+interface ISmartCardManager {
+    // Placeholder methods
+    fun connect(): Boolean
+    fun disconnect()
+    fun verifyPin(pin: String): Boolean
+    fun readData(): ByteArray?
+    fun writeData(data: ByteArray): Boolean
+}
+
+/**
+ * Placeholder implementation của SmartCardManager
+ */
+class PlaceholderSmartCardManager : ISmartCardManager {
+    override fun connect() = true
+    override fun disconnect() {}
+    override fun verifyPin(pin: String) = true
+    override fun readData() = null
+    override fun writeData(data: ByteArray) = true
+}
+
+/**
  * Enum định nghĩa các màn hình trong ứng dụng
  */
 enum class AppScreen {
@@ -30,8 +54,8 @@ fun SmartCardApp() {
     // State lưu vai trò người dùng (false = USER, true = ADMIN)
     var isAdminMode by remember { mutableStateOf(false) }
     
-    // SmartCardManager instance (placeholder)
-    val smartCardManager = remember { /* SmartCardManager() */ Any() }
+    // SmartCardManager instance với type-safe interface
+    val smartCardManager: ISmartCardManager = remember { PlaceholderSmartCardManager() }
     
     // Navigation logic
     when (currentScreen) {

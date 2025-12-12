@@ -28,14 +28,14 @@ import androidx.compose.ui.window.Dialog
  * 5. Sử dụng vé chơi
  * 6. Quay lại
  *
- * @param smartCardManager Manager quản lý các thao tác với thẻ (placeholder)
+ * @param smartCardManager Manager quản lý các thao tác với thẻ
  * @param onNavigateToCustomerView Navigate đến màn hình xem thông tin
  * @param onNavigateToChangePin Navigate đến màn hình đổi PIN
  * @param onBack Quay lại màn hình chọn vai trò
  */
 @Composable
 fun UserMainMenuScreen(
-    smartCardManager: Any, // SmartCardManager - placeholder type
+    smartCardManager: Any, // ISmartCardManager in actual implementation
     onNavigateToCustomerView: () -> Unit,
     onNavigateToChangePin: () -> Unit,
     onBack: () -> Unit
@@ -286,7 +286,7 @@ private fun BalanceDialog(
                 )
                 
                 Text(
-                    text = "${balance.toString().reversed().chunked(3).joinToString(".").reversed()} VNĐ",
+                    text = "${formatBalance(balance)} VNĐ",
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFF81C784),
@@ -441,4 +441,12 @@ private fun UseTicketDialog(
             }
         }
     }
+}
+
+/**
+ * Helper function để format số dư thành định dạng có dấu chấm phân cách hàng nghìn
+ * Ví dụ: 100000 -> "100.000"
+ */
+private fun formatBalance(balance: Int): String {
+    return balance.toString().reversed().chunked(3).joinToString(".").reversed()
 }
