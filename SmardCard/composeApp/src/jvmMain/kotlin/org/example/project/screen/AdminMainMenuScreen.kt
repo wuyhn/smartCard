@@ -31,14 +31,14 @@ import androidx.compose.ui.window.Dialog
  * 8. Xem thông tin thẻ
  * 9. Quay lại
  *
- * @param smartCardManager Manager quản lý các thao tác với thẻ
+ * @param smartCardManager Manager quản lý các thao tác với thẻ (type: Any để tránh cross-module dependency)
  * @param onNavigateToWriteData Navigate đến màn hình ghi dữ liệu
  * @param onNavigateToCustomerView Navigate đến màn hình xem thông tin
  * @param onBack Quay lại màn hình chọn vai trò
  */
 @Composable
 fun AdminMainMenuScreen(
-    smartCardManager: Any, // ISmartCardManager in actual implementation
+    smartCardManager: Any, // Accepts any type to avoid module dependency; cast to ISmartCardManager when used
     onNavigateToWriteData: () -> Unit,
     onNavigateToCustomerView: () -> Unit,
     onBack: () -> Unit
